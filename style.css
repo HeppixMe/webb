@@ -164,6 +164,10 @@ h2:hover { transform: scale(1.03); }
   50% { color: #D291BC; }
   100% { color: #957DAD; }
 }
+@keyframes spin{
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
  a {
     all: unset;
   }
@@ -183,6 +187,9 @@ h2:hover { transform: scale(1.03); }
 .skillsImg:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-5px);
+  animation: spin 3s linear infinite;
+  transform-origin: center;
+  will-change: transform;
 }
 .row {
   display: flex;
@@ -194,14 +201,15 @@ ul {
   list-style-type: none;
   padding: 0;
   text-indent: 5%;
-
 }
 li{  
   animation: pulse 3s ease-in-out infinite;
   transform-origin: left center;
   will-change: transform;
 }
+
 li:hover{
+  
   transform: translateY(-1px);
   color: var(--hover);
 }
@@ -241,4 +249,13 @@ li:hover{
   padding: 1rem;
   box-sizing: border-box;
 }
-
+/* Responsive Design */
+@media (max-width: 768px) { 
+  h1 {
+    font-size: 2.5rem;
+  }
+  .abilities .row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
