@@ -119,7 +119,7 @@ h1:hover::after { width: 100px; }
   text-align: center;
   position: relative;
 }
-.intro-text {
+.containerAll {
   max-width: 700px;
   margin: 0 auto;
   padding: 2rem;
@@ -132,11 +132,11 @@ h1:hover::after { width: 100px; }
   line-height: 1.7;
   border-left: 4px solid var(--highlight);
 }
-.intro-text:hover {
+.containerAll:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-5px);
 }
-.intro-text strong {
+.containerAll strong {
   color: var(--hover);
   font-weight: 700;
 }
@@ -198,32 +198,3 @@ h1:hover::after { width: 100px; }
   gap: 15px;
   margin-bottom: 15px;
 }
-  /* Footer Modernisierung */
-    footer {
-      background-color: var(--background);
-      color: var(--text);
-      text-align: center;
-      padding: 2.5rem 0;
-      position: relative;
-      margin-top: 4rem;
-    }
-    
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
-      background: var(--highlight);
-      border-radius: 2px;
-    }
-    
-    .copyright {
-      font-size: 0.9rem;
-      margin: 0;
-      color: var(--text);
-      opacity: 0.8;
-    }
-    
