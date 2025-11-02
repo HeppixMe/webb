@@ -158,6 +158,12 @@ h2:hover { transform: scale(1.03); }
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes pulse {
+  0% { color: #957DAD; }
+  50% { color: #D291BC; }
+  100% { color: #957DAD; }
+}
  a {
     all: unset;
   }
@@ -188,9 +194,15 @@ ul {
   list-style-type: none;
   padding: 0;
   text-indent: 5%;
+
+}
+li{  
+  animation: pulse 3s ease-in-out infinite;
+  transform-origin: left center;
+  will-change: transform;
 }
 li:hover{
-  transform: translateY(-5px);
+  transform: translateY(-1px);
   color: var(--hover);
 }
    /* Footer Modernisierung */
