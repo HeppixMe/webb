@@ -113,6 +113,16 @@ h1::after {
 h1:hover { transform: scale(1.03); }
 h1:hover::after { width: 100px; }
 
+/* Headline (h2) */
+h2 {
+  color: var(--hover);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+h2:hover { transform: scale(1.03); }
 /* Intro-Abschnitt */
 .intro {
   padding: 4rem 0 2rem;
@@ -120,12 +130,10 @@ h1:hover::after { width: 100px; }
   position: relative;
 }
 .containerAll {
-  max-width: 700px;
   margin: 0 auto;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius);
-  position: relative;
   box-shadow: var(--shadow);
   transition: transform var(--transition-speed), box-shadow var(--transition-speed);
   font-size: 1.1rem;
@@ -156,28 +164,6 @@ h1:hover::after { width: 100px; }
   a:hover {
         cursor: pointer;
     }
-.skills {
-  display: block;
-  width: 700px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--border-radius);
-  position: relative;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-  font-size: 1.1rem;
-  line-height: 1.7;
-  border-left: 4px solid var(--highlight);
-}
-.skills:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-5px);
-}
-.skills strong {
-  color: var(--text);
-  font-weight: 700;
-}
 .skillsImg {
   max-width: 60px;
   background: rgba(255, 255, 255, 0.05);
@@ -206,3 +192,40 @@ ul {
 li:hover{
   transform: translateY(-5px);
 }
+   /* Footer Modernisierung */
+    footer {
+      background-color: var(--background);
+      color: var(--text);
+      text-align: center;
+      padding: 2.5rem 0;
+      position: relative;
+      margin-top: 4rem;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--highlight);
+      border-radius: 2px;
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      margin: 0;
+      color: var(--text);
+      opacity: 0.8;
+    }
+/* Unified container width: all main containers share the same max-width and padding */
+.container, .containerAll, .skills, main {
+  width: 90%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
