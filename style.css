@@ -198,3 +198,11 @@ h1:hover::after { width: 100px; }
   gap: 15px;
   margin-bottom: 15px;
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+  text-indent: 5%;
+}
+li:hover{
+  transform: translateY(-5px);
+}
