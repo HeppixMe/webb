@@ -1,64 +1,65 @@
 # Heppi.Me
 
-Kurze Beschreibung
-- Statische Portfolio-/Landingpage mit einfacher Struktur (HTML + CSS).
-- Fokus: klare Typographie, sanfte Farben und responsive Layout.
+Kurzes, modernes Portfolio / Landingpage — statische HTML‑Seite mit einfachem, sauberem CSS.
 
-Status
-- Prototyp / statische Seite — keine Build-Tools nötig.
+## Kurzbeschreibung
+Heppi.Me ist eine minimalistische Portfolio‑/Landingpage, gebaut mit reinem HTML und CSS. Fokus liegt auf klarer Typographie, sanften Farben und einer leicht erweiterbaren Struktur.
 
-Technologien
+## Features
+- Einfache, responsive Struktur (kein Build‑Tool erforderlich)  
+- Variablenbasiertes Design (CSS :root) für schnelle Anpassungen  
+- Sticky Header, Intro‑Card mit Hover‑Effekten  
+- Optionaler Dark/Light Mode via Klassen (.dark-mode / .light-mode)
+
+## Technologie
 - HTML5
 - CSS (style.css)
-- Optional: VS Code Live Server oder ein einfacher HTTP-Server zum lokalen Testen
 
-Projektstruktur (wichtigste Dateien)
-- index.html — Einstiegspunkt
-- style.css — alle Styles (siehe c:\Users\leopold\Documents\GitHub\webb\style.css)
-- assets/ — Favicons und Bilder
-
-Schnellstart (lokal)
-1. Repo öffnen in VS Code.
-2. Direkt: index.html im Browser öffnen.
-3. Oder mit Live Server (empfohlen):
-   - VS Code: "Live Server" Extension installieren → Rechtsklick auf index.html → "Open with Live Server".
-4. Oder mit Python (PowerShell):
+## Schnellstart (lokal)
+1. Repo in VS Code öffnen.  
+2. index.html direkt im Browser öffnen — oder:
+3. Mit VS Code Live Server:
+   - Extension installieren → Rechtsklick auf `index.html` → "Open with Live Server".
+4. Einfacher HTTP‑Server (PowerShell / Python):
    ```powershell
    cd c:\Users\leopold\Documents\GitHub\webb
    python -m http.server 3000
-   # dann im Browser: http://localhost:3000
+   # Öffne http://localhost:3000
    ```
 
-Favicon: abgerundete Ecken erzeugen
-- Browser-Favicons können nicht per CSS gerundet werden — ersetze das Favicon-Bild durch eine vorgerundete PNG/ICO.
-- Beispiel (PowerShell + ImageMagick installiert):
-  ```powershell
-  magick "assets/favicon.png" -alpha set -virtual-pixel transparent -resize 64x64 `
-    ( -size 64x64 xc:none -fill white -draw "roundrectangle 0,0,63,63,10,10" ) -compose DstIn -composite "assets/favicon_rounded.png"
+## Favicons (abgerundete Ecken)
+Browser‑Favicons können nicht per CSS gerundet werden. Erzeuge ein gerundetes Bild vorab (ImageMagick empfohlen):
 
-  magick "assets/favicon_rounded.png" -define icon:auto-resize=64,48,32,16 "assets/favicon.ico"
-  ```
-- Danach in index.html auf die neue Datei verweisen:
-  ```html
-  <link rel="icon" href="assets/favicon_rounded.png" type="image/png">
-  ```
+```powershell
+# ImageMagick erforderlich
+magick "assets/favicon.png" -alpha set -virtual-pixel transparent -resize 64x64 `
+  ( -size 64x64 xc:none -fill white -draw "roundrectangle 0,0,63,63,10,10" ) -compose DstIn -composite "assets/favicon_rounded.png"
 
-Design / Styles
-- Variablen sind in :root definiert (Farben, Abstände, Border-Radius).
-- Header sticky, animierte Intro-Card, Utility-Klassen (.container, .hidden).
-- Dark-/Light-Mode über .dark-mode / .light-mode möglich.
+magick "assets/favicon_rounded.png" -define icon:auto-resize=64,48,32,16 "assets/favicon.ico"
+```
 
-Weiteres / To‑Do Vorschläge
-- CSS in mehrere Dateien (variables, base, components, utils) aufteilen.
-- Kleine Accessibility-Checks (Kontrast, ARIA für Navigation).
-- Favicons in mehreren Größen bereitstellen.
+Im HTML dann verweisen:
+```html
+<link rel="icon" href="assets/favicon_rounded.png" type="image/png">
+```
 
-Mitwirken
-- Änderungen via Pull Request oder direktes Commit im Repo.
-- Bitte kurze Beschreibung jeder Änderung in Commit-Message.
+## Projektstruktur (relevant)
+- index.html — Einstiegspunkt  
+- style.css — alle Styles (zentrale Datei)  
+- assets/ — Favicons, Bilder
 
-Lizenz
-- Keine Lizenz angegeben — falls nötig, LICENSE-Datei hinzufügen (z.B. MIT).
+Empfohlen (optional): Styles in mehrere Dateien aufteilen (variables, base, components, utils).
 
-Kontakt
-- Projekt unter c:\Users\leopold\Documents\GitHub\webb — bei Fragen Änderungen direkt in VS Code vornehmen.
+## Weiteres / To‑Do
+- Accessibility prüfen (Kontrast, Semantik, ARIA)  
+- Mehrere Favicon‑Größen bereitstellen  
+- Optional: Build‑Pipeline (PostCSS/Autoprefixer) für bessere Browserunterstützung
+
+## Mitwirken
+Änderungen per Commit/PR. Kurzbeschreibung in Commit‑Message angeben.
+
+## Lizenz
+Keine Lizenz definiert. Bei Bedarf LICENSE (z. B. MIT) hinzufügen.
+
+## Kontakt
+Projektordner: c:\Users\leopold\Documents\GitHub\webb
