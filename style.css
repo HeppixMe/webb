@@ -154,20 +154,11 @@ h2:hover { transform: scale(1.03); }
 .hidden { display: none !important; }
 
 /* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
 }
 
-@keyframes pulse {
-  0% { color: #957DAD; }
-  50% { color: #D291BC; }
-  100% { color: #957DAD; }
-}
-@keyframes spin{
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
  a {
     all: unset;
   }
@@ -187,7 +178,7 @@ h2:hover { transform: scale(1.03); }
 .skillsImg:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-5px);
-  animation: spin 3s linear infinite;
+  animation: wiggle 1s linear infinite;
   transform-origin: center;
   will-change: transform;
 }
@@ -201,11 +192,6 @@ ul {
   list-style-type: none;
   padding: 0;
   text-indent: 5%;
-}
-li{  
-  animation: pulse 3s ease-in-out infinite;
-  transform-origin: left center;
-  will-change: transform;
 }
 
 li:hover{
