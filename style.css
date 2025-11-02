@@ -175,7 +175,7 @@ h1:hover::after { width: 100px; }
   transform: translateY(-5px);
 }
 .skills strong {
-  color: var(--hover);
+  color: var(--text);
   font-weight: 700;
 }
 .skillsImg {
@@ -198,3 +198,32 @@ h1:hover::after { width: 100px; }
   gap: 15px;
   margin-bottom: 15px;
 }
+  /* Footer Modernisierung */
+    footer {
+      background-color: var(--background);
+      color: var(--text);
+      text-align: center;
+      padding: 2.5rem 0;
+      position: relative;
+      margin-top: 4rem;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--highlight);
+      border-radius: 2px;
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      margin: 0;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    
