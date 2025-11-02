@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&family=Sigmar&display=swap');
+:root {
+    /* https://colorhunt.co/palette/e4f9f530e3ca11999e40514e */
+    --background: #E4F9F5;
+    --hover: #11999E;
+    --hover2: #30E3CA;
+    --text: #40514E;
+  }
+  .dark-mode {
+    --background: #40514E;
+    --hover: #30E3CA;
+    --hover2: #11999E;
+    --text: #E4F9F5;
+  }
+  .light-mode {
+    --background: #E4F9F5;
+    --hover: #11999E;
+    --hover2: #30E3CA;
+    --text: #40514E;
+  }
+  
+  button {
+    background: transparent;
+    border: none !important;
+  }
+  
+  .dangrek-regular {
+    font-family: "Dangrek", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  body {
+    font-family: "Dangrek", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+    color: var(--text);
+    overflow-x: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+    header {
+    background-color: var(--background);
+    color: var(--text);
+    padding: 1rem 0;
+    text-align: center;
+  }
+    h1 {
+    user-select: none;
+    font-family: "Dangrek", sans-serif;
+    margin: 0 auto;
+    color: var(--hover);
+  }
+ 
+  
+  a {
+    all: unset;
+  }
+  a:hover {
+        cursor: pointer;
+    }
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  nav ul li a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  nav ul li a:hover {
+    color: var(--hover);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .footer {
+    background-color: var(--background);
+    color: var(--text);
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  
+  .tab-links {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tab-links a {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: var(--background);
+    text-decoration: none;
+    color: var(--background);
+    cursor: pointer;
+  }
+  .tab-links a.active {
+    background-color: #fff;
+    font-weight: bold;
+  }
+  
+  .tab-content {
+    padding: 20px;
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  #rcorners2 {
+    margin-left: 10px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.55), 0 10px 10px rgba(0,0,0,0.55);
+    border-radius: 18px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.project-preview:hover {
+    transform: translateY(-4px) scale(1.03);
+    z-index: 3;
+
+}
