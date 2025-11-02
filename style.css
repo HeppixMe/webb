@@ -156,3 +156,45 @@ h1:hover::after { width: 100px; }
   a:hover {
         cursor: pointer;
     }
+.skills {
+  display: block;
+  width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  position: relative;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  border-left: 4px solid var(--highlight);
+}
+.skills:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+}
+.skills strong {
+  color: var(--hover);
+  font-weight: 700;
+}
+.skillsImg {
+  max-width: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  position: relative;
+  box-shadow: var(--shadow*2);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.skillsImg:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+}
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
