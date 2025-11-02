@@ -155,8 +155,9 @@ h2:hover { transform: scale(1.03); }
 
 /* Animation */
 @keyframes wiggle {
-  0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
+  0%, 100% { transform: rotate(0); }
+  25%,75% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
 }
 
  a {
@@ -176,9 +177,7 @@ h2:hover { transform: scale(1.03); }
   line-height: 1.7;
 }
 .skillsImg:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-5px);
-  animation: wiggle 1s linear infinite;
+  animation: wiggle 2s linear;
   transform-origin: center;
   will-change: transform;
 }
