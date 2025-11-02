@@ -1,136 +1,152 @@
 @import url('https://fonts.googleapis.com/css2?family=Dangrek&family=Sigmar&display=swap');
+
 :root {
-    /* https://colorhunt.co/palette/e4f9f530e3ca11999e40514e */
-    --background: #E4F9F5;
-    --hover: #11999E;
-    --hover2: #30E3CA;
-    --text: #40514E;
-  }
-  .dark-mode {
+  /* Farben (aus Datei) */
+  --background: #E4F9F5;
+  --hover: #11999E;
+  --hover2: #30E3CA;
+  --text: #40514E;
+
+  /* Layout / Effekte */
+  --transition-speed: 0.3s;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --border-radius: 16px;
+  --highlight: #73AD21;
+
+  /* Container */
+  --container-max-width: 1200px;
+}
+
+/* Theme overrides */
+.dark-mode {
     --background: #40514E;
     --hover: #30E3CA;
     --hover2: #11999E;
     --text: #E4F9F5;
-  }
-  .light-mode {
+}
+.light-mode {
     --background: #E4F9F5;
     --hover: #11999E;
     --hover2: #30E3CA;
     --text: #40514E;
-  }
-  
-  button {
-    background: transparent;
-    border: none !important;
-  }
-  
-  .dangrek-regular {
+}
+
+/* Utility / typography helper kept (wie original) */
+.dangrek-regular {
     font-family: "Dangrek", sans-serif;
     font-weight: 400;
     font-style: normal;
-  }
-  
-  body {
-    font-family: "Dangrek", Arial, sans-serif;
+}
+
+/* Basis / Layout */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+    /* Letzte body-Regel aus Original beibehalten (Kaskade => Roboto wird angewendet) */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     background-color: var(--background);
     color: var(--text);
     overflow-x: hidden;
     display: grid;
     grid-template-rows: auto 1fr auto;
-  }
-    header {
-    background-color: var(--background);
-    color: var(--text);
-    padding: 1rem 0;
-    text-align: center;
-  }
-    h1 {
-    user-select: none;
-    font-family: "Dangrek", sans-serif;
-    margin: 0 auto;
-    color: var(--hover);
-  }
- 
-  
-  a {
-    all: unset;
-  }
-  a:hover {
-        cursor: pointer;
-    }
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  nav ul li a {
-    color: var(--text);
-    text-decoration: none;
-  }
-  nav ul li a:hover {
-    color: var(--hover);
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  
-  .footer {
-    background-color: var(--background);
-    color: var(--text);
-    text-align: center;
-    padding: 1rem 0;
-    width: 100%;
-    margin-bottom: 0;
-  }
-
-  
-  .tab-links {
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: center;
-    gap: 1rem;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .tab-links a {
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    background-color: var(--background);
-    text-decoration: none;
-    color: var(--background);
-    cursor: pointer;
-  }
-  .tab-links a.active {
-    background-color: #fff;
-    font-weight: bold;
-  }
-  
-  .tab-content {
-    padding: 20px;
-    display: none;
-  }
-  .tab-content.active {
-    display: block;
-  }
-  #rcorners2 {
-    margin-left: 10px;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.55), 0 10px 10px rgba(0,0,0,0.55);
-    border-radius: 18px;
-    transition: box-shadow 0.2s, transform 0.2s;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-.project-preview:hover {
-    transform: translateY(-4px) scale(1.03);
-    z-index: 3;
 
+/* Hauptcontainer (nur einmal definiert) */
+main {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  background-color: var(--background);
+  color: var(--text);
+  padding: 1.5rem 0;
+  text-align: center;
+  z-index: 100;
+  transition: all 0.4s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+}
+header.scrolled {
+  padding: 0.8rem 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Headline (h1) */
+h1 {
+  user-select: none;
+  font-family: "Dangrek", sans-serif;
+  margin: 0 auto;
+  color: var(--hover);
+  font-size: 3rem;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 4px;
+  background: var(--highlight);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+h1:hover { transform: scale(1.03); }
+h1:hover::after { width: 100px; }
+
+/* Intro-Abschnitt */
+.intro {
+  padding: 4rem 0 2rem;
+  text-align: center;
+  position: relative;
+}
+.intro-text {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  position: relative;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  border-left: 4px solid var(--highlight);
+}
+.intro-text:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+}
+.intro-text strong {
+  color: var(--hover);
+  font-weight: 700;
+}
+
+/* Kleine Utilities */
+.container { max-width: var(--container-max-width); margin: 0 auto; padding: 0 1rem; }
+.hidden { display: none !important; }
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
