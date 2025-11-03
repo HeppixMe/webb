@@ -261,8 +261,7 @@ li:hover{
 
 /* Decorative fish and animation */
 .fish {
-  position: fixed;
-  left: -20%;
+  opacity: 0.8;
   top: 45%;
   width: 140px;
   pointer-events: none;
@@ -308,11 +307,11 @@ li:hover{
 
 /* swim across screen and flip horizontally at midpoint */
 @keyframes fish-swim {
-  0%   { transform: translateX(24vw) translateY(0) scaleX(1); }
-  48%  { transform: translateX(100vw) translateY(-3vh) scaleX(1); }
-  50%  { transform: translateX(100vw) translateY(-3vh) scaleX(-1); } /* flip */
-  98%  { transform: translateX(24vw) translateY(0) scaleX(-1); }
-  100% { transform: translateX(24vw) translateY(0) scaleX(1); }
+  0%   { transform: translateX(4vw) translateY(0) scaleX(1); }
+  48%  { transform: translateX(80vw) translateY(-3vh) scaleX(1); }
+  50%  { transform: translateX(80vw) translateY(-3vh) scaleX(-1); } /* flip */
+  98%  { transform: translateX(4vw) translateY(0) scaleX(-1); }
+  100% { transform: translateX(4vw) translateY(0) scaleX(1); }
 }
 
 /* respect responsiveness: hide or scale on small screens */
