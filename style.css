@@ -57,6 +57,9 @@ body {
     transition: background-color var(--transition-speed), color var(--transition-speed);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* neu: Bezugspunkt für absolute Bubbles (nicht fixed) */
+    position: relative;
 }
 
 /* Hauptcontainer (nur einmal definiert) */
@@ -317,4 +320,74 @@ li:hover{
 /* respect responsiveness: hide or scale on small screens */
 @media (max-width: 600px) {
   .fish { display: none; } /* conserve space on phones */
+}
+
+/* Bubble container (document‑bound, nicht fixed) */
+.bubbles {
+  position: absolute;   /* previously fixed — now absolute relative to body */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 55;
+}
+
+/* single bubble */
+.bubble {
+  position: absolute;
+  width: var(--size, 16px);
+  height: var(--size, 16px);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transform: translateY(0) translateX(0) scale(1);
+  opacity: 1;
+  will-change: transform, opacity;
+  animation: rise var(--duration) linear forwards;
+}
+
+/* rise animation: goes well beyond viewport (-120vh) and drifts horizontally */
+@keyframes rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-200vh) translateX(var(--drift, 0px)) scale(1.02);
+    opacity: 0;
+  }
+}
+
+/* Pop-on-interaction (bubble) */
+.bubble.pop {
+  animation: none !important;
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 260ms ease-out;
+  transform: scale(1.6);
+  opacity: 0;
+  pointer-events: none;
+}
+.bubble.pop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 60%);
+  transform: scale(0.6);
+  opacity: 0.9;
+  animation: pop-ripple 260ms ease-out forwards;
+  pointer-events: none;
+}
+@keyframes pop-ripple {
+  to { transform: scale(2.2); opacity: 0; }
+}
+
+/* hide bubbles on small screens to avoid clutter */
+@media (max-width: 600px) {
+  .bubbles { display: none; }
 }
