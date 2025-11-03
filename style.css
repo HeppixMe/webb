@@ -180,7 +180,6 @@ a img {
   visibility: visible;
 }
 
-/* fixe ungültige box-shadow-Angabe */
 .skillsImg {
   max-width: 60px;
   background: rgba(255, 255, 255, 0.05);
@@ -189,6 +188,7 @@ a img {
   transition: transform var(--transition-speed), box-shadow var(--transition-speed);
   font-size: 1.1rem;
   line-height: 1.7;
+  
 }
 .skillsImg:hover {
   animation: wiggle 2s linear;
@@ -257,4 +257,65 @@ li:hover{
     flex-direction: column;
     align-items: center;
   }
+}
+
+/* Decorative fish and animation */
+.fish {
+  position: fixed;
+  left: -20%;
+  top: 45%;
+  width: 140px;
+  pointer-events: none;
+  z-index: 60;
+  transform-origin: center;
+  /* main horizontal swim (also flips horizontally at midpoint) */
+  animation: fish-swim 12s linear infinite;
+}
+
+/* SVG sizing */
+.fish svg { width: 100%; height: auto; display: block; }
+
+/* colors use your CSS variables */
+.fish .body { fill: var(--hover2); }
+.fish .tail { fill: var(--hover); transform-origin: 40% 50%; }
+.fish .fin  { fill: rgba(255,255,255,0.12); }
+.fish .eye  { fill: #072; }
+
+/* tail wags continuously */
+.fish .tail {
+  animation: tail-wag 0.36s ease-in-out infinite;
+}
+
+/* body bobs up and down independently */
+.fish .body, .fish .fin, .fish .eye {
+  animation: body-bob 3.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* keyframes */
+@keyframes tail-wag {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* small vertical bob */
+@keyframes body-bob {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(6px); }
+  100% { transform: translateY(0); }
+}
+
+/* swim across screen and flip horizontally at midpoint */
+@keyframes fish-swim {
+  0%   { transform: translateX(24vw) translateY(0) scaleX(1); }
+  48%  { transform: translateX(100vw) translateY(-3vh) scaleX(1); }
+  50%  { transform: translateX(100vw) translateY(-3vh) scaleX(-1); } /* flip */
+  98%  { transform: translateX(24vw) translateY(0) scaleX(-1); }
+  100% { transform: translateX(24vw) translateY(0) scaleX(1); }
+}
+
+/* respect responsiveness: hide or scale on small screens */
+@media (max-width: 600px) {
+  .fish { display: none; } /* conserve space on phones */
 }
