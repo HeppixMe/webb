@@ -344,7 +344,7 @@ li:hover{
   border: 1px solid rgba(255,255,255,0.95);
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   transform: translateY(0) translateX(0) scale(1);
-  opacity: 1;
+  opacity: 0.5;
   will-change: transform, opacity;
   animation: rise var(--duration) linear forwards;
 }
@@ -390,4 +390,7 @@ li:hover{
 /* hide bubbles on small screens to avoid clutter */
 @media (max-width: 600px) {
   .bubbles { display: none; }
+}
+.poem {
+  scrollbar-color: var(--hover2) var(--highlight);
 }
