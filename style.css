@@ -160,18 +160,32 @@ h2:hover { transform: scale(1.03); }
   50% { transform: rotate(-5deg); }
 }
 
- a {
-    all: unset;
-  }
-  a:hover {
-        cursor: pointer;
-    }
+/* Fix: ensure links don't hide images */
+a {
+  /* kein all: unset; das macht verlinkte Bilder oft unsichtbar */
+  text-decoration: none;
+  color: inherit;
+  vertical-align: middle;
+}
+
+a img {
+  display: block;        /* entfernt inline-inkonsistenzen */
+  max-width: 100%;
+  width: auto;
+  height: 48px;          /* gewünschte Icon-Höhe — anpassen */
+  object-fit: contain;
+  border: 0;
+  background: transparent;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* fixe ungültige box-shadow-Angabe */
 .skillsImg {
   max-width: 60px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius);
   position: relative;
-  box-shadow: var(--shadow*2);
   transition: transform var(--transition-speed), box-shadow var(--transition-speed);
   font-size: 1.1rem;
   line-height: 1.7;
