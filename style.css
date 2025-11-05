@@ -193,10 +193,14 @@ a img {
   line-height: 1.7;
   
 }
-.skillsImg:hover {
+a .skillsImg:hover {
   animation: wiggle 2s linear;
   transform-origin: center;
   will-change: transform;
+}
+.skillsImg:hover {
+   box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
 }
 .row {
   display: flex;
@@ -208,11 +212,24 @@ ul {
   list-style-type: none;
   padding: 0;
   text-indent: 5%;
+  max-width: 30%;
 }
-
-li:hover{
-  
-  transform: translateY(-1px);
+li{
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+  margin-top: 5px;
+  border-left: 4px solid var(--hover);
+  text-align: center;
+}
+@keyframes wigglelittle{
+  0%, 100% { transform: rotate(0); }
+  25%,75% { transform: rotate(1deg); }
+  50% { transform: rotate(-1deg); }
+}
+li:hover {
+  animation: wigglelittle 2s linear;
+  transform-origin: center;
+  will-change: transform;
   color: var(--hover);
 }
    /* Footer Modernisierung */
