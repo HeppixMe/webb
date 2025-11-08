@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Flowfield Wallpaper</title>
+<style>
+html, body { margin:0; padding:0; overflow:hidden; background:#252525; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+// --- Perlin Noise Implementation (Stefan Gustavson, Public Domain) ---
+let perm = new Uint8Array(512);
+let grad3 = [
+    [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],
+    [1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],
+    [0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]
+];
+function seedNoise(seed) {
+    let p = new Uint8Array(256);
+    for (let i = 0; i < 256; ++i) p[i] = i;
+    let n, q;
+    for (let i = 255; i > 0; --i) {
+        n = Math.floor((seed = (seed * 9301 + 49297) % 233280) / 233280 * (i + 1));
+        q = p[i]; p[i] = p[n]; p[n] = q;
+    }
+    for (let i = 0; i < 512; ++i) perm[i] = p[i & 255];
+}
+seedNoise(42);
+
+function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+function lerp(a, b, t) { return (1 - t) * a + t * b; }
+function grad(hash, x, y, z) {
+    let h = hash & 15;
+    let u = h < 8 ? x : y;
+    let v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+    return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+}
+function perlin(x, y, z) {
+    let X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+    x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+    let u = fade(x), v = fade(y), w = fade(z);
+    let A = perm[X]+Y, AA = perm[A]+Z, AB = perm[A+1]+Z;
+    let B = perm[X+1]+Y, BA = perm[B]+Z, BB = perm[B+1]+Z;
+    return lerp(
+        lerp(
+            lerp(grad(perm[AA], x, y, z), grad(perm[BA], x-1, y, z), u),
+            lerp(grad(perm[AB], x, y-1, z), grad(perm[BB], x-1, y-1, z), u),
+            v
+        ),
+        lerp(
+            lerp(grad(perm[AA+1], x, y, z-1), grad(perm[BA+1], x-1, y, z-1), u),
+            lerp(grad(perm[AB+1], x, y-1, z-1), grad(perm[BB+1], x-1, y-1, z-1), u),
+            v
+        ),
+        w
+    );
+}
+
+// --- Flowfield Code ---
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+// Dynamische Größenanpassung
+let w = window.innerWidth, h = window.innerHeight;
+canvas.width = w; canvas.height = h;
+
+function updateResolution() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+    cols = Math.floor(w/8);
+    rows = Math.floor(h/8);
+    cellWidth = w / cols;
+    cellHeight = h / rows;
+}
+let cols = Math.floor(w/8), rows = Math.floor(h/8);
+let cellWidth = w / cols, cellHeight = h / rows;
+
+// Parameter
+const scale = 0.1;
+const numParticles = 6000;
+const maxTrail = 10;
+const randomness = 0.5;
+const maxSpeed = 3;
+const inertia = 0.8; // Trägheit der Partikel (0...1, je höher desto träger)
+let z = 0;
+
+// Partikel initialisieren, jeder mit eigener Beschleunigung
+let particles = [];
+for(let i=0;i<numParticles;i++) {
+    let x = Math.random()*w, y = Math.random()*h;
+    let accel = 0.1 + Math.random()*0.3; // individuell
+    particles.push({x, y, vx:0, vy:0, accel, trail:[[x,y]]});
+}
+
+// --- Flowfield-Cache für diesen Frame ---
+let flow = new Array(rows);
+for(let i=0;i<rows;i++) flow[i] = new Array(cols);
+
+function computeFlowfield(z) {
+    // Nur einmal pro Frame berechnen
+    for(let row=0;row<rows;row++) {
+        for(let col=0;col<cols;col++) {
+            // Wraparound: Seiten zeigen in ähnliche Richtung
+            let fx = (col + cols) % cols;
+            let fy = (row + rows) % rows;
+            let angle = perlin(
+                (fx/cols)*4, // 4 = Kachelgröße, kann angepasst werden
+                (fy/rows)*4,
+                z
+            ) * Math.PI*2;
+            flow[row][col]=angle;
+        }
+    }
+}
+
+let lastFrame = 0;
+const fps = 20;
+const frameDuration = 1000 / fps;
+
+function draw(now) {
+    if (!now) now = performance.now();
+    if (now - lastFrame < frameDuration) {
+        requestAnimationFrame(draw);
+        return;
+    }
+    lastFrame = now;
+
+    // Hintergrund leicht abdunkeln für ausfaden der Trails
+    ctx.globalAlpha = 1.0;
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0,0,w,h);
+
+    computeFlowfield(z);
+
+    // Partikel bewegen und Trails zeichnen
+    ctx.globalAlpha = 1.0;
+    ctx.lineWidth = 1;
+    for(let i=0; i<numParticles; i++) {
+        let p = particles[i];
+        let col = Math.floor(p.x/cellWidth), row = Math.floor(p.y/cellHeight);
+        if(col>=0&&col<cols&&row>=0&&row<rows) {
+            let angle = flow[row][col];
+            let ax = Math.cos(angle)*p.accel; // randomness ist 0, daher kein Zufall nötig
+            let ay = Math.sin(angle)*p.accel;
+            // Trägheit anwenden
+            p.vx = p.vx * inertia + ax;
+            p.vy = p.vy * inertia + ay;
+            let speed = Math.hypot(p.vx, p.vy);
+            if(speed>maxSpeed) {
+                p.vx = p.vx/speed*maxSpeed;
+                p.vy = p.vy/speed*maxSpeed;
+            }
+            p.x += p.vx; p.y += p.vy;
+        }
+        // Wrap-around am Rand
+        if(p.x<0) p.x+=w;
+        if(p.x>w) p.x-=w;
+        if(p.y<0) p.y+=h;
+        if(p.y>h) p.y-=h;
+        // Trail aktualisieren
+        p.trail.push([p.x,p.y]);
+        if(p.trail.length>maxTrail) p.trail.shift();
+        // Trail zeichnen (nur wenn Sprung nicht zu groß, mit abnehmendem Alpha)
+        let trail = p.trail;
+        for(let j=1;j<trail.length;j++) {
+            let [x1,y1]=trail[j-1], [x2,y2]=trail[j];
+            if(Math.abs(x2-x1)<w/2 && Math.abs(y2-y1)<h/2) {
+                ctx.strokeStyle = `rgba(180,0,0,${j/maxTrail})`;
+                ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+            }
+        }
+    }
+    z+=0.0089;
+    requestAnimationFrame(draw);
+}
+draw();
+
+window.onresize = ()=>{
+    updateResolution();
+    // Flowfield-Cache neu anlegen
+    cols = Math.floor(w/8);
+    rows = Math.floor(h/8);
+    cellWidth = w / cols;
+    cellHeight = h / rows;
+    flow = new Array(rows);
+    for(let i=0;i<rows;i++) flow[i] = new Array(cols);
+};
+</script>
+</body>
+</html>
